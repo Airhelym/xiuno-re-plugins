@@ -1,0 +1,160 @@
+<script>
+<?php
+if (isset($haya_post_like_re_config['open_thread'])
+	&& $haya_post_like_re_config['open_thread'] == 1
+) {
+?>
+$(document).on('click', '.js-haya-post-like-re-show-users', function() {
+	var show_users = $(".haya-post-like-re-show-users");
+	var pid = $(this).attr("data-pid");
+	if (show_users.hasClass("d-none")) {
+		show_users.fadeIn().removeClass("d-none");
+		if (!show_users.hasClass("like-users-loaded")) {
+			show_users.addClass("like-users-loaded");
+
+			var url = '<?php echo url("post-post_like_re-users");?>';
+			$.xpost(url, {'pid': pid}, function(code, msg) {
+				if (code == 1) {
+					show_users.find(".haya-post-like-re-users").html(msg);
+				} else {
+					haya_like_msg = msg || "加载信息失败~";
+					show_users.find(".haya-post-like-re-users").html(haya_like_msg);
+				}
+			});
+		}
+	} else {
+		show_users.fadeOut().addClass("d-none");
+	}
+});
+
+	<?php if ($uid) { ?>
+	$(document).on('click', '.js-haya-post-like-re-thread-add', function() {
+		$(this).attr("disabled", "disabled");
+
+		var thiz = $(this);
+		var pid = thiz.attr("data-pid");
+		var url = '<?php echo url("post-post_like_re-create");?>';
+		$.xpost(url, {'pid': pid}, function(code, msg){
+			if (code == 1) {
+				thiz.removeClass('js-haya-post-like-re-thread-add')
+					.addClass('js-haya-post-like-re-thread-del')
+					.attr('title', '取消点赞');
+
+				thiz.find(".icon").removeClass('icon-thumbs-o-up')
+					.addClass('icon-thumbs-up')
+					.attr("aria-label", '取消点赞');
+
+				thiz.find(".haya-post-like-re-thread-btn")
+					.text('已赞');
+
+				$(".haya-post-like-re-user-count").text(msg.count);
+
+				if (msg.users) {
+					$(".haya-post-like-re-show-users").find(".haya-post-like-re-users").html(msg.users);
+				}
+			} else {
+				$.alert(msg);
+			}
+
+			thiz.removeAttr("disabled");
+		});
+	});
+	$(document).on('click', '.js-haya-post-like-re-thread-del', function() {
+		$(this).attr("disabled", "disabled");
+
+		var thiz = $(this);
+		var pid = thiz.attr("data-pid");
+		var url = '<?php echo url("post-post_like_re-delete");?>';
+		$.xpost(url, {'pid': pid}, function(code, msg) {
+			if (code == 1) {
+				thiz.removeClass('js-haya-post-like-re-thread-del')
+					.addClass('js-haya-post-like-re-thread-add')
+					.attr('title', '点赞本帖');
+
+				thiz.find(".icon").removeClass('icon-thumbs-up')
+					.addClass('icon-thumbs-o-up')
+					.attr("aria-label", '点赞本帖');
+
+				thiz.find(".haya-post-like-re-thread-btn")
+					.text('点赞');
+
+				$(".haya-post-like-re-user-count").text(msg.count);
+
+				if (msg.users) {
+					$(".haya-post-like-re-show-users").find(".haya-post-like-re-users").html(msg.users);
+				}
+			} else {
+				$.alert(msg);
+			}
+
+			thiz.removeAttr("disabled");
+		});
+	});
+	<?php } else { ?>
+	$(document).on('click', '.js-haya-post-like-re-thread-tip', function() {
+		$.alert("登录后才可以点赞本帖！");
+	});
+	<?php } ?>
+<?php } ?>
+
+<?php
+if (isset($haya_post_like_re_config['open_post'])
+	&& $haya_post_like_re_config['open_post'] == 1
+) {
+?>
+	<?php if ($uid) { ?>
+	$(document).on('click', '.js-haya-post-like-re-post-add', function() {
+		var thiz = $(this);
+
+		thiz.removeClass('js-haya-post-like-re-post-add');
+
+		var pid = thiz.attr("data-pid");
+		var url = '<?php echo url("post-post_like_re-create");?>';
+		$.xpost(url, {'pid': pid}, function(code, msg){
+			if (code == 1) {
+				thiz.removeClass('js-haya-post-like-re-post-add')
+					.addClass('js-haya-post-like-re-post-del')
+					.attr('title', '取消点赞');
+
+				thiz.find(".icon").removeClass('icon-thumbs-o-up')
+					.addClass('icon-thumbs-up')
+					.attr("aria-label", '取消点赞');
+
+				thiz.find(".haya-post-like-re-post-user-count").text(msg.count);
+			} else {
+				thiz.addClass('js-haya-post-like-re-post-add');
+				$.alert(msg);
+			}
+		});
+	});
+	$(document).on('click', '.js-haya-post-like-re-post-del', function() {
+		var thiz = $(this);
+
+		thiz.removeClass('js-haya-post-like-re-post-del');
+
+		var pid = thiz.attr("data-pid");
+		var url = '<?php echo url("post-post_like_re-delete");?>';
+		$.xpost(url, {'pid': pid}, function(code, msg){
+			if (code == 1) {
+				thiz.removeClass('js-haya-post-like-re-post-del')
+					.addClass('js-haya-post-like-re-post-add')
+					.attr('title', '点赞回复');
+
+				thiz.find(".icon").removeClass('icon-thumbs-up')
+					.addClass('icon-thumbs-o-up')
+					.attr("aria-label", '点赞回复');
+
+				thiz.find(".haya-post-like-re-post-user-count").text(msg.count);
+			} else {
+				thiz.addClass('js-haya-post-like-re-post-del');
+				$.alert(msg);
+			}
+		});
+	});
+	<?php } else { ?>
+	$(document).on('click', '.js-haya-post-like-re-post-tip', function() {
+		$.alert("登录后才可以点赞该回复！");
+	});
+	<?php } ?>
+<?php } ?>
+</script>

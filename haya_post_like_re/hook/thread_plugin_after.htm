@@ -1,0 +1,27 @@
+<?php
+$haya_post_like_re_config = isset($haya_post_like_re_config) ? $haya_post_like_re_config : setting_get('haya_post_like_re');
+?>
+<?php if (!isset($haya_post_like_re_config['show_like_users']) || $haya_post_like_re_config['show_like_users'] == 1) { ?>
+<div class="haya-post-like-re">
+	<div class="text-center d-none haya-post-like-re-show-users">
+		<div class="text-start m-0 p-0 col-md-6 mx-auto">
+			<div class="modal position-static d-block" tabindex="-1">
+				<div class="modal-dialog m-0">
+					<div class="modal-content">
+						<div class="modal-header small">
+							<b>点赞用户（<span class="haya-post-like-re-user-count"><?php echo intval($first['haya_post_likes']); ?></span>）</b>
+							<button type="button" class="btn-close haya-post-like-re-close js-haya-post-like-re-show-users" aria-label="Close"></button>
+						</div>
+
+						<div class="modal-body p-3">
+							<div class="text-muted haya-post-like-re-users small break-all">
+								<div class="text-muted">正在加载信息~</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<?php } ?>

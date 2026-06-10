@@ -1,0 +1,30 @@
+<?php
+if (isset($haya_post_like_re_config['open_post'])
+	&& $haya_post_like_re_config['open_post'] == 1
+) {
+
+$haya_post_like_re_check = isset($haya_post_like_re_pids[$_post['pid']]);
+?>
+
+	<span class="haya-post-like-re pl-2">
+		<?php if (!empty($uid)) { ?>
+			<?php if($haya_post_like_re_check){ ?>
+				<a href="javascript:;" class="text-grey js-haya-post-like-re-post-del" data-pid="<?php echo $_post['pid'];?>" title="取消点赞">
+					<i class="icon icon-thumbs-up" aria-label="取消点赞"></i>
+					<span class="haya-post-like-re-post-user-count"><?php echo intval($_post['haya_post_likes']); ?></span>
+				</a>
+			<?php } else { ?>
+				<a href="javascript:;" class="text-grey js-haya-post-like-re-post-add" data-pid="<?php echo $_post['pid'];?>" title="点赞回复">
+					<i class="icon icon-thumbs-o-up" aria-label="点赞回复"></i>
+					<span class="haya-post-like-re-post-user-count"><?php echo intval($_post['haya_post_likes']); ?></span>
+				</a>
+			<?php } ?>
+		<?php } else { ?>
+			<a href="javascript:;" class="text-grey js-haya-post-like-re-post-tip" data-pid="<?php echo $_post['pid'];?>" title="点赞回复">
+				<i class="icon icon-thumbs-up" aria-label="点赞回复"></i>
+				<span class="haya-post-like-re-post-user-count"><?php echo intval($_post['haya_post_likes']); ?></span>
+			</a>
+		<?php } ?>
+	</span>
+
+<?php } ?>

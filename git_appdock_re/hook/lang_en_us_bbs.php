@@ -1,0 +1,6 @@
+'dock_home'=>'Home',
+'dock_category'=>'category',
+'dock_notice'=>'notice',
+'dock_my'=>'my',
+'dock_section'=>'Forum section',
+'dock_login'=>'Login / Register',

@@ -1,0 +1,107 @@
+<?php $haya_favorite_config = setting_get('haya_favorite'); ?>
+<?php $haya_check_favorite = haya_favorite_find_by_uid_and_tid($uid, $tid); ?>
+<?php $haya_favorite_count = haya_favorite_count(array('tid' => $tid)); ?>
+<?php if (!isset($haya_favorite_config['thread_show_favorite_card']) || $haya_favorite_config['thread_show_favorite_card'] == 1) { ?>
+
+<div class="card">
+	<div class="card-body">
+		<div class="card-title">
+			<div class="d-flex justify-content-between">
+				<div>			
+					<b>收藏列表</b> 					
+					(<span class="posts"><?php echo intval($haya_favorite_count); ?></span>)
+					
+					<?php if ($uid) { ?>
+						<?php if($haya_check_favorite){ ?>
+							<i class="icon icon-heart ms-1 js-haya-del-favorite" style="cursor:pointer;color:#ea413c;" title="取消收藏" id="haya_del_favorite" onclick="haya_favorite_del()"></i>
+						<?php }else{ ?>
+							<i class="icon icon-heart-o ms-1 js-haya-add-favorite" style="cursor:pointer;" title="收藏本帖" id="haya_add_favorite" onclick="haya_favorite_add()"></i>
+						<?php } ?>	
+
+						<span class="text-muted ms-3 haya-favorite-tip" style="display:none;">收藏成功！</span>
+					<?php } else { ?>
+						<i class="icon icon-heart ms-1" style="cursor:pointer;color:#ea413c;" title="收藏帖子" onclick="haya_favorite_tip()"></i>
+					<?php } ?>
+				</div>
+				
+				<?php if ($uid) { ?>
+					<span class="float-end">
+						<a href="<?php echo url("my-favorite"); ?>" target="_blank">我的收藏</a>
+					</span>
+				<?php } ?>
+			</div>
+		</div>	
+	
+		<div class="d-flex">
+			<div class="text-muted">
+				<?php $haya_favorite_users_data = haya_favorite_find_by_tid($tid, 10); ?>
+				<?php if (!empty($haya_favorite_users_data)) { ?>
+					<?php $haya_favorite_usernames = array(); ?>
+					<?php foreach ($haya_favorite_users_data as $haya_favorite_user) { ?>
+						<?php $haya_favorite_usernames[] = $haya_favorite_user['favorite_user']['username']; ?>
+					<?php } ?>
+					<?php echo implode('、', $haya_favorite_usernames); ?>
+					等人收藏了本帖
+				<?php }else{ ?>
+					还没有人收藏过本帖~
+				<?php } ?>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+<?php if ($uid) { ?>
+function haya_favorite_add() {
+	$.xpost('<?php echo url("my-favorite");?>','action=add&tid=<?php echo $tid;?>',function(code,msg){
+		if (code == 1) {
+			$('#haya_add_favorite')
+				.removeClass('icon-heart-o')
+				.addClass('icon-heart')
+				.css('color','#ea413c')
+				.attr('onclick','haya_favorite_del()')
+				.attr('id','haya_del_favorite')
+				.attr('title','取消收藏');
+			
+			$('.haya-favorite-tip')
+				.text("收藏帖子成功！")
+				.fadeIn();
+				
+			setTimeout(function(){
+				$('.haya-favorite-tip').fadeOut();
+			}, 1500);				
+		} else {
+			$.alert(msg);
+		}
+	});
+}
+function haya_favorite_del() {
+	$.xpost('<?php echo url("my-favorite");?>','action=del&tid=<?php echo $tid;?>',function(code,msg){
+		if (code == 1) {
+			$('#haya_del_favorite')
+				.removeClass('icon-heart')
+				.addClass('icon-heart-o')
+				.css('color','#000')
+				.attr('onclick','haya_favorite_add()')
+				.attr('id','haya_add_favorite')
+				.attr('title','收藏本帖');
+			
+			$('.haya-favorite-tip')
+				.text("取消收藏成功！")
+				.fadeIn();
+				
+			setTimeout(function(){
+				$('.haya-favorite-tip').fadeOut();
+			}, 1500);				
+		} else {
+			$.alert(msg);
+		}
+	});
+}
+<?php }else{ ?>
+function haya_favorite_tip() {
+	$.alert("登录后才可以收藏帖子");
+}
+<?php } ?>
+</script>
+<?php } ?>

@@ -1,0 +1,60 @@
+<?php
+$haya_post_like_re_config = isset($haya_post_like_re_config) ? $haya_post_like_re_config : setting_get('haya_post_like_re');
+?>
+<?php
+if (isset($haya_post_like_re_config['open_thread'])
+	&& $haya_post_like_re_config['open_thread'] == 1
+) {
+?>
+	<?php $haya_post_like_re_thread_check = haya_post_like_re_find_by_uid_and_pid($uid, $first['pid']); ?>
+
+	<style>
+	.haya-post-like-re {
+		position: relative;
+	}
+	.haya-post-like-re-show-users {
+		position: absolute;
+		top: 5px;
+		z-index: 100;
+		width: 100%;
+	}
+	.haya-post-like-re-show-users .haya-post-like-re-users {
+		max-height: 250px;
+		overflow-y: auto;
+		text-align: start;
+	}
+	.haya-post-like-re-show-users .haya-post-like-re-users > span {
+		display: inline-block;
+	}
+	.haya-post-like-re-show-users .haya-post-like-re-users > span > a {
+		display: inline-block;
+	}
+	</style>
+
+	<div class="haya-post-like-re px-1">
+		<span class="btn-group" role="group">
+			<?php if (!empty($uid)) { ?>
+				<?php if($haya_post_like_re_thread_check){ ?>
+					<button class="btn btn-outline-secondary js-haya-post-like-re-thread-del" data-pid="<?php echo $first['pid'];?>" title="取消点赞">
+						<i class="icon icon-thumbs-up" aria-label="取消点赞"></i>
+						<span class="haya-post-like-re-thread-btn">已赞</span>
+					</button>
+				<?php } else { ?>
+					<button class="btn btn-outline-secondary js-haya-post-like-re-thread-add" data-pid="<?php echo $first['pid'];?>" title="点赞本帖">
+						<i class="icon icon-thumbs-o-up" aria-label="点赞本帖"></i>
+						<span class="haya-post-like-re-thread-btn">点赞</span>
+					</button>
+				<?php } ?>
+			<?php } else { ?>
+				<button class="btn btn-outline-secondary js-haya-post-like-re-thread-tip" data-pid="<?php echo $first['pid'];?>" title="点赞本帖">
+					<i class="icon icon-thumbs-up" aria-label="点赞本帖"></i>
+					<span class="haya-post-like-re-thread-btn">点赞</span>
+				</button>
+			<?php } ?>
+
+			<button class="btn btn-outline-secondary js-haya-post-like-re-show-users" data-pid="<?php echo $first['pid'];?>" data-tid="<?php echo $tid;?>" title="点赞数量">
+				<span class="haya-post-like-re-user-count"><?php echo intval($first['haya_post_likes']); ?></span>
+			</button>
+		</span>
+	</div>
+<?php } ?>

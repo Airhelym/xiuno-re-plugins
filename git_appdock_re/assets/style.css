@@ -1,0 +1,53 @@
+:root {
+    --appdock-height: 55px;
+}
+
+.appdock-bar {
+    height: var(--appdock-height);
+    background: #fff;
+    border-top: 1px solid #eee;
+    z-index: 10;
+}
+
+.appdock-bar .btn-create {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.appdock-bar .badge-notice {
+    font-size: 10px;
+}
+
+.appdock-bar .forum-stats {
+    font-size: 12px;
+}
+
+.appdock-login-wrapper {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: calc(var(--appdock-height) + 6px);
+    z-index: 1031;
+    text-align: center;
+    pointer-events: none;
+}
+.appdock-login-wrapper a {
+    pointer-events: auto;
+}
+
+@media (min-width: 992px) {
+    .appdock-bar,
+    .appdock-login-wrapper {
+        display: none !important;
+    }
+}
+
+@media (max-width: 991.98px) {
+    #footer {
+        padding-bottom: calc(var(--appdock-height) + 1.5rem) !important;
+    }
+}

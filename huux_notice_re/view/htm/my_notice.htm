@@ -1,0 +1,38 @@
+<template include="./plugin/huux_notice_re/view/htm/my_notice.template.htm">
+	<slot name="my_body">
+		<div class="mx-auto">
+			<?php if($user['notices'] != 0) { ?>
+				<div class="d-flex justify-content-between flex-wrap gap-2">
+					<div class="d-flex flex-wrap gap-1 mb-1">
+						<?php foreach ($notice_menu as $k=>$v) {
+							if(!isset($v['url']) || !isset($v['name'])) continue;
+							$btn_class = 'notice-btn-type-'.(isset($v['class']) ? str_replace('notice-type-', '', $v['class']) : 'other');
+						?>
+						<a class="btn btn-sm <?php echo $type == $k ? $btn_class.' active' : 'btn-outline-secondary';?>" href="<?php echo $v['url'];?>"><?php echo $v['name'];?></a>
+						<?php } ?>
+					</div>
+					<div class="d-flex gap-1">
+						<button class="btn btn-sm btn-outline-danger mb-1" data-confirm-text="<?php echo lang('notice_my_delete_thispagemessage')?>?" id="delete"><?php echo lang('notice_my_delete_thispagemessage')?></button>
+						<button class="btn btn-sm btn-outline-primary mb-1 <?php echo $user['unread_notices'] == 0 ? '' : 'readall';?>" id="readall">
+							<?php echo $user['unread_notices'] == 0 ? lang('notice_my_update_allread') : lang('notice_my_marked_allread');?>
+						</button>
+					</div>
+				</div>
+				<ul class="list-unstyled noticelist mt-2" data-nidarr='<?php echo xn_json_encode(arrlist_values($noticelist, 'nid'));?>'>
+					<?php include _include(APP_PATH.'plugin/huux_notice_re/view/htm/my_notice_list.inc.htm');?>
+				</ul>
+				<?php if($pagination) { ?>
+				<nav>
+					<ul class="pagination justify-content-center flex-wrap"><?php echo $pagination;?></ul>
+				</nav>
+				<?php }?>
+			<?php } else { ?>
+			<div class="d-flex justify-content-center">
+				<div class="text-center h1 pt-5 pb-5"><i class="icon icon-bell d-block mb-2"></i><p class="h6"><?php echo lang('notice_my_nomessage');?></p></div>
+			</div>
+			<?php } ?>
+		</div>
+	</slot>
+</template>
+
+<!--{hook my_notice_js.htm}-->

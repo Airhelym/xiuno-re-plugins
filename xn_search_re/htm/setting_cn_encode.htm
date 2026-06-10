@@ -1,0 +1,102 @@
+<?php include _include(ADMIN_PATH.'view/htm/header.inc.htm');?>
+
+<div class="row">
+	<div class="col-lg-10 mx-auto">
+
+		<div class="btn-group mb-3" role="group">
+			<?php echo admin_tab_active(array(
+					'set'=>array('url'=>url('plugin-setting-xn_search_re-set'), 'text'=>lang('admin_setting_search_set')),
+					'cn_encode'=>array('url'=>url('plugin-setting-xn_search_re-cn_encode'), 'text'=>lang('admin_setting_search_cn_encode'))
+				), $action);
+			?>
+		</div>
+
+		<div class="card">
+			<div class="card-body">
+				<form action="" method="get" id="form">
+					<div class="mb-3 row">
+						<label class="col-sm-2 col-form-label"><?php echo lang('current_subject_count');?>：</label>
+						<div class="col-sm-10">
+							<?php echo $runtime['threads']; ?>
+						</div>
+					</div>
+					<div class="mb-3 row">
+						<label class="col-sm-2 col-form-label"><?php echo lang('total_post_count');?>：</label>
+						<div class="col-sm-10">
+							<?php echo $posts; ?>
+						</div>
+					</div>
+					<div class="mb-3 row">
+						<label class="col-sm-2 col-form-label"><?php echo lang('rebuild_range');?>：</label>
+						<div class="col-sm-10">
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="range" value="1" id="cn_range_1">
+								<label class="form-check-label" for="cn_range_1"><?php echo lang('search_range_subject');?></label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="range" value="2" id="cn_range_2">
+								<label class="form-check-label" for="cn_range_2"><?php echo lang('search_range_post');?></label>
+							</div>
+						</div>
+					</div>
+					<div class="mb-3 row d-none" id="subject_start_div">
+						<label class="col-sm-2 col-form-label"><?php echo lang('progress');?>：</label>
+						<div class="col-sm-10">
+							<?php echo $input['subject_start']; ?>
+						</div>
+					</div>
+					<div class="mb-3 row d-none" id="post_start_div">
+						<label class="col-sm-2 col-form-label"><?php echo lang('progress');?>：</label>
+						<div class="col-sm-10">
+							<?php echo $input['post_start']; ?>
+						</div>
+					</div>
+					<div class="mb-3 row">
+						<label class="col-sm-2 col-form-label"></label>
+						<div class="col-sm-10">
+							<button type="submit" class="btn btn-primary w-100" id="submit" data-loading-text="<?php echo lang('submiting');?>..."><?php echo lang('admin_start_rebuild');?></button>
+							<a role="button" class="btn btn-secondary w-100 mt-3" href="javascript:history.back();">
+								<?php echo lang('back');?>
+							</a>
+						</div>
+					</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<?php include _include(ADMIN_PATH.'view/htm/footer.inc.htm');?>
+
+<script>
+var jform = $("#form");
+var jsubmit = $("#submit");
+var jrange = jform.find('input[name="range"]');
+var jsubject_start_div = $('#subject_start_div');
+var jpost_start_div = $('#post_start_div');
+var jsubject_start = jform.find('input[name="subject_start"]');
+var jpost_start = jform.find('input[name="post_start"]');
+jform.on('submit', function() {
+	jform.reset();
+	jsubmit.button('loading');
+	var range = jrange.checked();
+	var start = (range == 1 ? jsubject_start.val() : jpost_start.val());
+	window.location = xn.url('plugin-setting-xn_search_re-rebuild-' + range + '-' + start);
+	return false;
+});
+
+function on_range_change(v) {
+	if (v == 1) {
+		jsubject_start_div.removeClass('d-none');
+		jpost_start_div.addClass('d-none');
+	} else {
+		jsubject_start_div.addClass('d-none');
+		jpost_start_div.removeClass('d-none');
+	}
+}
+jrange.on('change', function() {
+	on_range_change($(this).val());
+});
+on_range_change(jrange.checked());
+</script>

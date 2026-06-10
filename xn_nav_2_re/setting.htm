@@ -1,0 +1,234 @@
+<?php include _include(ADMIN_PATH.'view/htm/header.inc.htm');?>
+
+<div class="row">
+	<div class="col-lg-10 offset-lg-1">
+		<div class="card">
+			<div class="card-body">
+				<form action="<?php echo url("plugin-setting-xn_nav_2_re");?>" method="post" id="form">
+					<h4 class="card-title"><?php echo lang('nav_2_title');?></h4>
+
+					<h5 class="mt-4"><?php echo lang('nav_2_basic');?></h5>
+					<hr>
+
+					<div class="mb-3 row">
+						<label class="col-sm-5 col-form-label"><?php echo lang('nav_2_bbs_on');?>：</label>
+						<div class="col-sm-7">
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="nav_2_bbs_on" value="1" id="bbs_on_1"<?php echo $conf['nav_2_bbs_on']?' checked':'';?>>
+								<label class="form-check-label" for="bbs_on_1"><?php echo lang('yes');?></label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="nav_2_bbs_on" value="0" id="bbs_on_0"<?php echo $conf['nav_2_bbs_on']==0?' checked':'';?>>
+								<label class="form-check-label" for="bbs_on_0"><?php echo lang('no');?></label>
+							</div>
+						</div>
+					</div>
+
+					<div class="mb-3 row">
+						<label class="col-sm-5 col-form-label"><?php echo lang('nav_2_forum_list_pc_on');?>：</label>
+						<div class="col-sm-7">
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="nav_2_forum_list_pc_on" value="1" id="fl_pc_1"<?php echo $conf['nav_2_forum_list_pc_on']?' checked':'';?>>
+								<label class="form-check-label" for="fl_pc_1"><?php echo lang('yes');?></label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="nav_2_forum_list_pc_on" value="0" id="fl_pc_0"<?php echo $conf['nav_2_forum_list_pc_on']==0?' checked':'';?>>
+								<label class="form-check-label" for="fl_pc_0"><?php echo lang('no');?></label>
+							</div>
+						</div>
+					</div>
+
+					<div class="mb-3 row">
+						<label class="col-sm-5 col-form-label"><?php echo lang('nav_2_forum_list_mobile_on');?>：</label>
+						<div class="col-sm-7">
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="nav_2_forum_list_mobile_on" value="1" id="fl_mb_1"<?php echo $conf['nav_2_forum_list_mobile_on']?' checked':'';?>>
+								<label class="form-check-label" for="fl_mb_1"><?php echo lang('yes');?></label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="nav_2_forum_list_mobile_on" value="0" id="fl_mb_0"<?php echo $conf['nav_2_forum_list_mobile_on']==0?' checked':'';?>>
+								<label class="form-check-label" for="fl_mb_0"><?php echo lang('no');?></label>
+							</div>
+						</div>
+					</div>
+
+					<div class="mb-3 row">
+						<label class="col-sm-5 col-form-label"><?php echo lang('nav_2_mobile_display_label');?>：</label>
+						<div class="col-sm-7">
+							<div class="form-check form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="nav_2_mobile_display" value="collapse" id="md_collapse"<?php echo $conf['nav_2_mobile_display']=='collapse'?' checked':'';?>>
+								<label class="form-check-label" for="md_collapse"><?php echo lang('nav_2_mobile_collapse');?></label>
+							</div>
+							<div class="form-check form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="nav_2_mobile_display" value="offcanvas" id="md_offcanvas"<?php echo $conf['nav_2_mobile_display']=='offcanvas'?' checked':'';?>>
+								<label class="form-check-label" for="md_offcanvas"><?php echo lang('nav_2_mobile_offcanvas');?></label>
+							</div>
+						</div>
+					</div>
+
+					<div class="mb-3 row">
+						<label class="col-sm-5 col-form-label"><?php echo lang('nav_2_nav_fixed_label');?>：</label>
+						<div class="col-sm-7">
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="nav_2_nav_fixed" value="1" id="nav_fixed_1"<?php echo $conf['nav_2_nav_fixed']?' checked':'';?>>
+								<label class="form-check-label" for="nav_fixed_1"><?php echo lang('yes');?></label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="nav_2_nav_fixed" value="0" id="nav_fixed_0"<?php echo $conf['nav_2_nav_fixed']==0?' checked':'';?>>
+								<label class="form-check-label" for="nav_fixed_0"><?php echo lang('no');?></label>
+							</div>
+							<div class="text-muted small"><?php echo lang('nav_2_nav_fixed_brief');?></div>
+						</div>
+					</div>
+
+
+					<h5 class="mt-4"><?php echo lang('nav_2_channel_section');?></h5>
+					<hr>
+
+					<div class="mb-3 row">
+						<label class="col-sm-5 col-form-label"><?php echo lang('nav_2_display_label');?>：</label>
+						<div class="col-sm-7">
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="nav_2_channel_display" value="list" id="ch_list"<?php echo $conf['nav_2_channel_display']=='list'?' checked':'';?>>
+								<label class="form-check-label" for="ch_list"><?php echo lang('nav_2_display_list');?></label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="nav_2_channel_display" value="grid" id="ch_grid"<?php echo $conf['nav_2_channel_display']=='grid'?' checked':'';?>>
+								<label class="form-check-label" for="ch_grid"><?php echo lang('nav_2_display_grid');?></label>
+							</div>
+						</div>
+					</div>
+
+					<div class="mb-3 row">
+						<label class="col-sm-5 col-form-label"><?php echo lang('nav_2_cols_label');?>：</label>
+						<div class="col-sm-7">
+							<input class="form-control" type="number" name="nav_2_channel_cols" value="<?php echo $conf['nav_2_channel_cols'];?>" min="1" max="6" style="width:100px">
+						</div>
+					</div>
+
+					<div class="mb-3 row">
+						<label class="col-sm-5 col-form-label"><?php echo lang('nav_2_border_label');?>：</label>
+						<div class="col-sm-7">
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="nav_2_channel_border" value="1" id="ch_border_1"<?php echo $conf['nav_2_channel_border']?' checked':'';?>>
+								<label class="form-check-label" for="ch_border_1"><?php echo lang('yes');?></label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="nav_2_channel_border" value="0" id="ch_border_0"<?php echo $conf['nav_2_channel_border']==0?' checked':'';?>>
+								<label class="form-check-label" for="ch_border_0"><?php echo lang('no');?></label>
+							</div>
+						</div>
+					</div>
+
+					<h5 class="mt-4"><?php echo lang('nav_2_forumlist_section');?></h5>
+					<hr>
+
+					<div class="mb-3 row">
+						<label class="col-sm-5 col-form-label"><?php echo lang('nav_2_display_label');?>：</label>
+						<div class="col-sm-7">
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="nav_2_forumlist_display" value="list" id="fl_list"<?php echo $conf['nav_2_forumlist_display']=='list'?' checked':'';?>>
+								<label class="form-check-label" for="fl_list"><?php echo lang('nav_2_display_list');?></label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="nav_2_forumlist_display" value="grid" id="fl_grid"<?php echo $conf['nav_2_forumlist_display']=='grid'?' checked':'';?>>
+								<label class="form-check-label" for="fl_grid"><?php echo lang('nav_2_display_grid');?></label>
+							</div>
+						</div>
+					</div>
+
+					<div class="mb-3 row">
+						<label class="col-sm-5 col-form-label"><?php echo lang('nav_2_cols_label');?>：</label>
+						<div class="col-sm-7">
+							<input class="form-control" type="number" name="nav_2_forumlist_cols" value="<?php echo $conf['nav_2_forumlist_cols'];?>" min="1" max="6" style="width:100px">
+						</div>
+					</div>
+
+					<div class="mb-3 row">
+						<label class="col-sm-5 col-form-label"><?php echo lang('nav_2_border_label');?>：</label>
+						<div class="col-sm-7">
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="nav_2_forumlist_border" value="1" id="fl_border_1"<?php echo $conf['nav_2_forumlist_border']?' checked':'';?>>
+								<label class="form-check-label" for="fl_border_1"><?php echo lang('yes');?></label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="nav_2_forumlist_border" value="0" id="fl_border_0"<?php echo $conf['nav_2_forumlist_border']==0?' checked':'';?>>
+								<label class="form-check-label" for="fl_border_0"><?php echo lang('no');?></label>
+							</div>
+						</div>
+					</div>
+
+					<h5 class="mt-4"><?php echo lang('nav_2_my_section');?></h5>
+					<hr>
+
+					<div class="mb-3 row">
+						<label class="col-sm-5 col-form-label"><?php echo lang('nav_2_display_label');?>：</label>
+						<div class="col-sm-7">
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="nav_2_my_display" value="list" id="my_list"<?php echo $conf['nav_2_my_display']=='list'?' checked':'';?>>
+								<label class="form-check-label" for="my_list"><?php echo lang('nav_2_display_list');?></label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="nav_2_my_display" value="grid" id="my_grid"<?php echo $conf['nav_2_my_display']=='grid'?' checked':'';?>>
+								<label class="form-check-label" for="my_grid"><?php echo lang('nav_2_display_grid');?></label>
+							</div>
+						</div>
+					</div>
+
+					<div class="mb-3 row">
+						<label class="col-sm-5 col-form-label"><?php echo lang('nav_2_cols_label');?>：</label>
+						<div class="col-sm-7">
+							<input class="form-control" type="number" name="nav_2_my_cols" value="<?php echo $conf['nav_2_my_cols'];?>" min="1" max="6" style="width:100px">
+						</div>
+					</div>
+
+					<div class="mb-3 row">
+						<label class="col-sm-5 col-form-label"><?php echo lang('nav_2_border_label');?>：</label>
+						<div class="col-sm-7">
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="nav_2_my_border" value="1" id="my_border_1"<?php echo $conf['nav_2_my_border']?' checked':'';?>>
+								<label class="form-check-label" for="my_border_1"><?php echo lang('yes');?></label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="nav_2_my_border" value="0" id="my_border_0"<?php echo $conf['nav_2_my_border']==0?' checked':'';?>>
+								<label class="form-check-label" for="my_border_0"><?php echo lang('no');?></label>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-7 offset-sm-5">
+							<button type="submit" class="btn btn-primary w-100" id="submit" data-loading-text="<?php echo lang('submiting');?>..."><?php echo lang('confirm');?></button>
+							<a role="button" class="btn btn-outline-secondary w-100 mt-1" href="javascript:history.back();"><?php echo lang('back');?></a>
+						</div>
+					</div>
+				</form>
+			</div>
+			<p class="m-3 small"><?php echo lang('nav_2_dev_docs');?><a href="http://bbs.xiuno.com/thread-21418.htm" target="_blank">http://bbs.xiuno.com/thread-21418.htm</a></p>
+		</div>
+	</div>
+</div>
+
+<?php include _include(ADMIN_PATH.'view/htm/footer.inc.htm');?>
+
+<script>
+var jform = $("#form");
+var jsubmit = $("#submit");
+var referer = '<?php echo http_referer();?>';
+jform.on('submit', function(){
+	jform.reset();
+	jsubmit.button('loading');
+	var postdata = jform.serialize();
+	$.xpost(jform.attr('action'), postdata, function(code, message) {
+		if(code == 0) {
+			$.alert(message);
+			jsubmit.text(message).delay(2000).button('reset').location(referer);
+			return;
+		} else {
+			$.alert(message);
+			jsubmit.button('reset');
+		}
+	});
+	return false;
+});
+</script>

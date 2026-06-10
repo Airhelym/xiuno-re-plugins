@@ -1,0 +1,78 @@
+<?php include _include(ADMIN_PATH.'view/htm/header.inc.htm'); ?>
+
+<?php include _include(HAYA_ATTACH_RE_HTML.'common/tab.htm'); ?>
+
+<div class="row">
+	<div class="col-12">
+		
+		<div class="card">
+			<div class="card-body">
+				<form action="<?php echo url('plugin-setting-haya_attach_re');?>" method="post" id="formcreate">
+					<h4 class="card-title mb-3">附件管理设置</h4>
+					
+					<hr class="m-0" />
+					
+					<div class="form-group row mb-3 mt-4">
+						<label class="col-md-2 col-form-label text-md-end pe-0">
+							附件数量：
+						</label>
+						<div class="col-md-8">
+							<?php echo $attach_count; ?> 个
+						</div>
+					</div>
+					
+					<div class="form-group row mb-3">
+						<label class="col-md-2 col-form-label text-md-end pe-0">详情显示图片：</label>
+						<div class="col-md-8">
+							<select name="config[is_avatar]" id="form-active" class="form-control">
+								<?php if ($config['is_avatar']['value'] == 1) { ?>
+									<option value="0">关闭</option>
+									<option value="1" selected="selected">显示</option>
+								<?php } else { ?>
+									<option value="0" selected="selected">关闭</option>
+									<option value="1">显示</option>
+								<?php } ?>
+							</select>
+							<div class="figure-caption mt-2">
+								在详情页显示图片附件的预览。
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-group row mb-3">
+						<label class="col-md-2 col-form-label text-md-end pe-0">列表风格：</label>
+						<div class="col-md-8">
+							<select name="config[is_simple]" id="form-active" class="form-control">
+								<?php if ($config['is_simple']['value'] == 1) { ?>
+									<option value="0">简洁</option>
+									<option value="1" selected="selected">详情</option>
+								<?php } else { ?>
+									<option value="0" selected="selected">简洁</option>
+									<option value="1">详情</option>
+								<?php } ?>
+							</select>
+							<div class="figure-caption mt-2">
+								附件列表显示情况，可以根据自己情况选择。
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-group row mb-3">
+						<label class="col-md-2 col-form-label"></label>
+						<div class="col-md-2">
+							<button type="submit" class="btn btn-primary w-100 me-2 mb-3" id="submit"><?php echo lang('confirm');?></button>
+						</div>
+						<div class="col-md-2">
+							<a role="button" class="btn btn-secondary w-100 mb-3" href="javascript:history.back();"><?php echo lang('back');?></a>
+						</div>
+					</div>
+					
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<?php
+include _include(ADMIN_PATH.'view/htm/footer.inc.htm');
+?>

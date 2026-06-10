@@ -1,0 +1,92 @@
+<?php include _include(APP_PATH.'view/htm/header.inc.htm');?>
+
+<div class="card">
+	<div class="card-header"><?php echo lang('digest_thread');?></div>
+	<div class="card-body ajax-body">
+		<form action="<?php echo url("mod-digest");?>" method="post" id="mod_digest_form">
+			<div class="mb-3 row">
+				<label class="col-sm-3 col-form-label text-sm-end"><?php echo lang('total');?>：</label>
+				<div class="col-sm-9">
+					<span class="total fw-bold text-danger"></span> <?php echo lang('piece');?>
+				</div>
+			</div>
+			<div class="mb-3 row">
+				<label class="col-sm-3 col-form-label text-sm-end"><?php echo lang('digest_level');?>：</label>
+				<div class="col-sm-9">
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" name="digest" value="0" id="digest_0">
+						<label class="form-check-label" for="digest_0"><?php echo lang('digest_0');?></label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" name="digest" value="1" id="digest_1">
+						<label class="form-check-label" for="digest_1"><?php echo lang('digest_1');?></label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" name="digest" value="2" id="digest_2">
+						<label class="form-check-label" for="digest_2"><?php echo lang('digest_2');?></label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" name="digest" value="3" id="digest_3">
+						<label class="form-check-label" for="digest_3"><?php echo lang('digest_3');?></label>
+					</div>
+				</div>
+			</div>
+			<div class="mb-3 row">
+				<label class="col-sm-3 col-form-label text-sm-end"></label>
+				<div class="col-sm-9">
+					<button type="submit" class="btn btn-primary me-2" data-loading-text="<?php echo lang('submiting');?>..."><?php echo lang('confirm');?></button>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?php echo lang('close');?></button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<?php include _include(APP_PATH.'view/htm/footer.inc.htm');?>
+
+<script ajax-eval="true">
+
+var args = args || {jmodal: null, callback: null, arg: null};
+var jmodal = args.jmodal;
+var callback = args.callback;
+var arg = args.arg;
+var jthreadlist = $(arg);
+var tidarr = jthreadlist.find('input[name="modtid"]').checked();
+
+var jform = $('#mod_digest_form');
+var jsubmit = jform.find('button[type="submit"]');
+var jcancel = jform.find('button[type="button"]');
+var jdigest = jform.find('input[name="digest"]');
+var jtotal = jform.find('span.total');
+jtotal.text(tidarr.length);
+
+jform.on('submit', function() {
+	jform.reset();
+	jsubmit.prop('disabled', true);
+	var loadingText = jsubmit.data('loading-text');
+	jsubmit.html('<span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>' + loadingText);
+	var postdata = jform.serializeObject();
+	postdata.tidarr = tidarr;
+	postdata.digest = jdigest.checked();
+	$.xpost(jform.attr('action'), postdata, function(code, message) {
+		if(code == 0) {
+			jsubmit.removeClass('btn-primary').addClass('btn-success');
+			jsubmit.html(message);
+			setTimeout(function() {
+				if(jmodal) jmodal.modal('dispose');
+				if(callback) callback(message);
+				window.location.reload();
+			}, 1000);
+		} else {
+			jsubmit.prop('disabled', false);
+			jsubmit.text(jsubmit.data('default-text') || '<?php echo lang('confirm');?>');
+			alert(message);
+		}
+	});
+	return false;
+});
+jcancel.on('click', function() {
+	if(jmodal) jmodal.modal('dispose');
+});
+	
+</script>

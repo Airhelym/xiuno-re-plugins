@@ -1,0 +1,37 @@
+<table class="table table-striped table-hover" style="min-width: 800px">
+	<thead>
+		<tr>
+			<th width="60" class="text-center"><?php echo lang('delete');?></th>
+			<th width="50">ID</th>
+			<th width="100">文件名</th>
+			<th width="100">大小</th>
+			<th width="60">类型</th>
+			<th width="150">创建时间</th>
+			<th width="100">下载次数</th>
+			<th width="60">操作</th>
+		</tr>
+	</thead>
+	<tbody id="attachlist">
+		<?php if (!empty($attachlist)) { ?>
+			<?php foreach($attachlist as & $attach){ ?>
+				<tr aid="<?php echo $attach['aid']; ?>">
+					<td class="text-center"><input type="checkbox" name="delete" /></td>
+					<td><?php echo $attach['aid']; ?></td>
+					<td title="<?php echo $attach['comment']; ?>">
+						<a href="<?php echo url("attach-read-".$attach['aid']); ?>">
+							<i class="icon filetype <?php echo $attach['filetype']; ?>"></i>
+							<?php echo $attach['orgfilename']; ?>
+						</a>
+					</td>
+					<td><?php echo humansize($attach['filesize']); ?></td>
+					<td><?php echo $attach['filetype']; ?></td>
+					<td><?php echo date('Y-m-d H:i:s', $attach['create_date']); ?></td>
+					<td><?php echo intval($attach['downloads']); ?></td>
+					<td>
+						<a href="<?php echo url("attach-read-".$attach['aid']); ?>">查看</a>
+					</td>
+				</tr>
+			<?php } ?>
+		<?php } ?>
+	</tbody>
+</table>

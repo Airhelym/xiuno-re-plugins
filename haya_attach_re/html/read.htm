@@ -1,0 +1,207 @@
+<?php include _include(ADMIN_PATH.'view/htm/header.inc.htm'); ?>
+
+<?php include _include(HAYA_ATTACH_RE_HTML.'common/tab.htm'); ?>
+
+<div class="container">
+	<div class="row">
+		
+		<div class="col-md-12 mb-2">
+
+			<div class="card">
+				<div class="card-body">
+
+					<h4 class="card-title mb-3">
+						附件信息
+					</h4>
+			
+					<div class="form-group row mb-2">
+						<label class="col-md-2 col-form-label text-md-end pe-0">
+							ID：
+						</label>
+						<div class="col-md-8">
+							<?php echo $attach['aid']; ?>
+						</div>
+					</div>
+			
+					<div class="form-group row mb-2">
+						<label class="col-md-2 col-form-label text-md-end pe-0">
+							文件名：
+						</label>
+						<div class="col-md-8">
+							<?php echo $attach['orgfilename']; ?>
+						</div>
+					</div>
+			
+					<div class="form-group row mb-2">
+						<label class="col-md-2 col-form-label text-md-end pe-0">
+							类型：
+						</label>
+						<div class="col-md-8">
+							<i class="icon filetype <?php echo $attach['filetype']; ?>"></i>
+							<?php echo $attach['filetype']; ?>
+						</div>
+					</div>
+			
+					<div class="form-group row mb-2">
+						<label class="col-md-2 col-form-label text-md-end pe-0">
+							大小：
+						</label>
+						<div class="col-md-8">
+							<?php echo humansize($attach['filesize']); ?>
+						</div>
+					</div>
+				
+					<div class="form-group row mb-2">
+						<label class="col-md-2 col-form-label text-md-end pe-0">
+							创建时间：
+						</label>
+						<div class="col-md-8">
+							<?php echo date('Y-m-d H:i:s', $attach['create_date']); ?>
+						</div>
+					</div>
+				
+					<div class="form-group row mb-2">
+						<label class="col-md-2 col-form-label text-md-end pe-0">
+							所属帖子：
+						</label>
+						<div class="col-md-8">
+							<a href="../<?php echo url("thread-$thread[tid]");?>" target="_blank">
+								<?php if($thread['closed'] > 0) { ?><i class="icon-lock" aria-hidden="true"></i><?php } ?>
+								[<?php echo $thread['create_date_fmt'];?>]
+								<?php echo strip_tags($thread['subject']);?>
+								-<?php echo $thread['user']['username'];?>
+							</a>
+						</div>
+					</div>
+				
+					<div class="form-group row mb-2">
+						<label class="col-md-2 col-form-label text-md-end pe-0">
+							所属用户：
+						</label>
+						<div class="col-md-8">
+							<a href="../<?php echo url("user-$attach[uid]");?>" target="_blank">
+								<?php echo $user['username'];?>
+							</a>
+						</div>
+					</div>
+				
+					<div class="form-group row mb-2">
+						<label class="col-md-2 col-form-label text-md-end pe-0">
+							所属回帖：
+						</label>
+						<div class="col-md-8">
+							<a href="javascript:;">
+								[<?php echo $post['create_date_fmt'];?>]
+								<?php echo strip_tags($post['message_fmt']);?>
+								-<?php echo $post['user']['username'];?>
+							</a>
+						</div>
+					</div>
+				
+					<div class="form-group row mb-2">
+						<label class="col-md-2 col-form-label text-md-end pe-0">
+							下载次数：
+						</label>
+						<div class="col-md-8">
+							<?php echo intval($attach['downloads']); ?>
+						</div>
+					</div>
+					
+					<?php if (!empty($attach['width'])) { ?>
+				
+						<div class="form-group row mb-2">
+							<label class="col-md-2 col-form-label text-md-end pe-0">
+								图片规格：
+							</label>
+							<div class="col-md-8">
+								<?php echo $attach['width']; ?>
+								X 
+								<?php echo $attach['height']; ?>
+							</div>
+						</div>
+					
+					<?php } ?>
+				
+					<div class="form-group row mb-2">
+						<label class="col-md-2 col-form-label text-md-end pe-0">
+							备注：
+						</label>
+						<div class="col-md-8">
+							<?php if (!empty($attach['comment'])) { ?>
+								<?php echo $attach['comment']; ?>
+							<?php } else { ?>
+								~
+							<?php } ?>
+						</div>
+					</div>
+				
+					<div class="form-group row mb-2">
+						<label class="col-md-2 col-form-label text-md-end pe-0">
+							下载：
+						</label>
+						<div class="col-md-8">
+							<a href="../<?php echo url('attach-download-'.$attach['aid']); ?>">
+								点击下载
+							</a>
+						</div>
+					</div>
+				
+					<div class="form-group row mb-2">
+						<label class="col-md-2 col-form-label text-md-end pe-0">
+							预览：
+						</label>
+						<div class="col-md-8">
+							<?php echo $attach['url']; ?>
+							<?php 
+								if (!empty($attach['width']) 
+									&& isset($config['is_avatar'])
+									&& ($config['is_avatar']['value'] == 1)
+								) { 
+							?>
+								<div class="row mt-2">
+									<div class="col-12">
+										<img src="../<?php echo $attach['url']; ?>" style="width:100%;" />
+									</div>
+								</div>
+							<?php } ?>
+						</div>
+					</div>
+					
+					<div class="form-group row mb-3">
+						<label class="col-md-2 col-form-label"></label>
+						<div class="col-md-8">
+							<a href="javascript:;" data-id="<?php echo $attach['aid']; ?>" class="btn btn-primary w-100 mb-2" id="js-file-delete">删除</a>
+							<a role="button" class="btn btn-secondary w-100" href="javascript:history.back();"><?php echo lang('back');?></a>
+						</div>
+					</div>
+				
+				</div>
+			</div>
+		
+		</div>
+		
+	</div>
+</div>
+
+<?php include _include(HAYA_ATTACH_RE_HTML.'common/footer.htm'); ?>
+
+<script>
+var jdelete = $("#js-file-delete");
+jdelete.on('click', function(){
+	if (!window.confirm("确认要删除文件吗？")) {
+		return false;
+	}
+
+	var aid = $(this).attr('data-id');
+	$.xpost(xn.url('attach_re-delete'), {aid:aid}, function(code, message) {
+		if (code != 0) {
+			return $.alert(message);
+		} else {
+			$.alert(message);
+			
+			window.location.href = xn.url('attach_re-attachs');
+		}
+	});
+
+});
+</script>

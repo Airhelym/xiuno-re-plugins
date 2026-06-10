@@ -1,0 +1,67 @@
+<div id="appdock" class="appdock-bar fixed-bottom d-lg-none">
+    <div class="row mx-0 g-0 text-center align-items-center h-100">
+        <a href="./" class="col text-decoration-none text-secondary">
+            <div><i class="icon-home icon-fw"></i></div>
+            <div class="small"><?php echo lang('dock_home');?></div>
+        </a>
+        <a class="col text-decoration-none text-secondary" data-bs-toggle="modal" data-bs-target="#dockModal">
+            <div><i class="icon-bars icon-fw"></i></div>
+            <div class="small"><?php echo lang('dock_category');?></div>
+        </a>
+        <?php if($uid) { ?>
+        <a href="<?php echo url("thread-create-$fid");?>" class="col text-decoration-none">
+            <button type="button" class="btn btn-primary rounded-circle btn-create">
+                <i class="icon-plus icon-fw"></i>
+            </button>
+        </a>
+        <?php } ?>
+        <a href="<?php echo url("my-notice");?>" class="col text-decoration-none text-secondary position-relative">
+            <div>
+                <i class="icon-bell icon-fw"></i>
+                <?php if(!empty($user['unread_notices'])) { ?>
+                <span class="badge bg-danger rounded-pill position-absolute top-0 start-50 translate-middle badge-notice"><?php echo $user['unread_notices'];?></span>
+                <?php } ?>
+            </div>
+            <div class="small"><?php echo lang('dock_notice');?></div>
+        </a>
+        <a href="<?php echo url("my");?>" class="col text-decoration-none text-secondary">
+            <div><i class="icon-user icon-fw"></i></div>
+            <div class="small"><?php echo lang('dock_my');?></div>
+        </a>
+    </div>
+</div>
+
+<?php if(empty($uid) && in_array($route, array('bbs','forum','thread','post','index'))) { ?>
+<div class="appdock-login-wrapper">
+    <a href="<?php echo url('user-login');?>" role="button" class="btn btn-primary rounded-pill shadow"><?php echo lang('dock_login');?></a>
+</div>
+<?php } ?>
+
+<div class="modal fade" id="dockModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><?php echo lang('dock_section');?></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row row-cols-2 g-2">
+                    <?php foreach($forumlist_show as $_forum) { ?>
+                    <div class="col">
+                        <a class="d-flex align-items-center p-2 bg-light rounded text-decoration-none" href="<?php echo url("forum-$_forum[fid]");?>">
+                            <img class="avatar-3 rounded me-2" src="<?php echo $_forum['icon_url'];?>">
+                            <div class="text-truncate">
+                                <div class="fw-bold small"><?php echo $_forum['name'];?></div>
+                                <div class="text-muted forum-stats">
+                                    <i class="icon-comment"></i> <?php echo $_forum['threads'];?>
+                                    <i class="icon-comments"></i> <?php echo $_forum['todayposts'];?>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

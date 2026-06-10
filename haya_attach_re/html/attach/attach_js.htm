@@ -1,0 +1,42 @@
+<script>
+var jsearch = $("#search");
+var jsrchtype = $("#srchtype");
+var jkeyword = $('#keyword');
+var jconfirm = $("#confirm");
+var jattachlist = $('#attachlist');
+
+jsrchtype.val(jsrchtype.attr('value'));
+
+jsearch.on('click', function(){
+	var srchtype = jsrchtype.val();
+	srchtype = srchtype ? srchtype : 'orgfilename';
+	var keyword = $("#keyword").val();
+	var url = xn.url('attach_re-attachs-'+srchtype+'-'+xn.urlencode(keyword)+'-1');
+	window.location = url;
+});
+jkeyword.on('keydown', function(e) {
+	if (e.keyCode == 13) {
+		jsearch.trigger('click')
+	};
+});
+
+jconfirm.on('click', function(){
+	var jchecked = jattachlist.find('input[name="delete"]').filter(function(){ return this.checked; });
+	if (jchecked.length < 1) {
+		return alert("请选择要删除的文件");
+	}
+	if (!window.confirm("确认要删除文件吗？")) return false;
+	jchecked.each(function() {
+		jtr = $(this).parents('tr');
+		var aid = jtr.attr('aid');
+		$.xpost(xn.url('attach_re-delete'), {aid:aid}, function(code, message) {
+			if (code != 0) {
+				return $.alert(message);
+			}
+		
+			jtr.remove();
+		});
+	});
+});
+
+</script>

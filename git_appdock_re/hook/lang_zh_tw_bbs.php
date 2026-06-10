@@ -1,0 +1,6 @@
+'dock_home'=>'首頁',
+'dock_category'=>'分類',
+'dock_notice'=>'消息',
+'dock_my'=>'我的',
+'dock_section'=>'分類導航',
+'dock_login'=>'登錄 / 註冊',

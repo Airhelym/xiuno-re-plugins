@@ -1,0 +1,25 @@
+<?php $haya_favorite_config = isset($haya_favorite_config) ? $haya_favorite_config : setting_get('haya_favorite'); ?>
+<?php if (!isset($haya_favorite_config['thread_show_favorite_users']) || $haya_favorite_config['thread_show_favorite_users'] == 1) { ?>
+<div class="haya-favoriter">
+	<div class="text-center d-none haya-favorite-show-users">
+		<div class="text-start m-0 p-0 col-md-6 mx-auto">
+			<div class="modal position-static d-block" tabindex="-1">
+				<div class="modal-dialog m-0">
+					<div class="modal-content">
+						<div class="modal-header small">
+							<b><?php echo lang('haya_favorite_users'); ?>（<span class="haya-favorite-user-count"><?php echo intval($thread['favorites']); ?></span>）</b>
+							<button type="button" class="btn-close haya-favorite-close js-haya-favorite-show-users" aria-label="Close"></button>
+						</div>
+					
+						<div class="modal-body p-3">
+							<div class="text-muted haya-favorite-users small break-all">
+								<div class="text-muted"><?php echo lang('haya_favorite_loading'); ?></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<?php } ?>

@@ -1,0 +1,11 @@
+{
+    "name": "APP底部栏 RE",
+    "brief": "APP底部导航栏。现基于 Bootstrap5 优化。<br>原版由 <a style='font-weight:600;color:red;' href='https://www.noteweb.top' target='_blank'>NOTEWEB</a> 重制优化。",
+    "version": "3.0",
+    "bbs_version": "4.0",
+    "installed": 0,
+    "enable": 0,
+    "hooks_rank": [],
+    "overwrites_rank": [],
+    "dependencies": []
+}

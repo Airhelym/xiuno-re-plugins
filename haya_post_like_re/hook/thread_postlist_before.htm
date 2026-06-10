@@ -1,0 +1,99 @@
+<?php
+if (isset($haya_post_like_re_config['open_post'])
+	&& $haya_post_like_re_config['open_post'] == 1
+) {
+?>
+
+	<?php if (!empty($haya_post_like_re_hot_posts)) { ?>
+	<div class="card">
+		<div class="card-body">
+			<div class="card-title">
+				<div class="d-flex justify-content-between">
+					<div>
+						<b>热门回复</b>
+					</div>
+					<div></div>
+				</div>
+			</div>
+			<ul class="list-unstyled postlist">
+
+				<?php
+					empty($allowupdate) AND $allowupdate = 0;
+					empty($allowdelete) AND $allowdelete = 0;
+					empty($allowpost) AND $allowpost = 0;
+				?>
+
+				<?php
+				foreach($haya_post_like_re_hot_posts as $haya_post_like_re_hot_post) {
+					$haya_post_like_re_hot_posts_check = isset($haya_post_like_re_pids[$haya_post_like_re_hot_post['pid']]);
+				?>
+				<li class="media <?php echo $haya_post_like_re_hot_post['classname'];?>" data-pid="<?php echo $haya_post_like_re_hot_post['pid'];?>" data-uid="<?php echo $haya_post_like_re_hot_post['uid'];?>">
+					<a href="<?php echo url("user-$haya_post_like_re_hot_post[uid]");?>" class="me-3" tabindex="-1">
+						<img class="avatar-3" src="<?php echo $haya_post_like_re_hot_post['user_avatar_url'];?>">
+					</a>
+					<div class="media-body">
+						<div class="d-flex justify-content-between small text-muted">
+							<div>
+								<span class="username">
+									<a href="<?php echo url("user-$haya_post_like_re_hot_post[uid]");?>" class="text-muted fw-bold"><?php echo $haya_post_like_re_hot_post['username'];?></a>
+								</span>
+
+								<span class="date text-grey ms-2"><?php echo $haya_post_like_re_hot_post['create_date_fmt'];?></span>
+
+								<span class="haya-post-like-re ps-2">
+									<?php if (!empty($uid)) { ?>
+										<?php if($haya_post_like_re_hot_posts_check){ ?>
+											<a href="javascript:;" class="text-grey js-haya-post-like-re-post-del" data-pid="<?php echo $haya_post_like_re_hot_post['pid'];?>" title="取消点赞">
+												<i class="icon icon-thumbs-up" aria-label="取消点赞"></i>
+												<span class="haya-post-like-re-post-user-count"><?php echo intval($haya_post_like_re_hot_post['haya_post_likes']); ?></span>
+											</a>
+										<?php } else { ?>
+											<a href="javascript:;" class="text-grey js-haya-post-like-re-post-add" data-pid="<?php echo $haya_post_like_re_hot_post['pid'];?>" title="赞该回复">
+												<i class="icon icon-thumbs-o-up" aria-label="赞该回复"></i>
+												<span class="haya-post-like-re-post-user-count"><?php echo intval($haya_post_like_re_hot_post['haya_post_likes']); ?></span>
+											</a>
+										<?php } ?>
+									<?php } else { ?>
+										<a href="javascript:;" class="text-grey js-haya-post-like-re-post-tip" data-pid="<?php echo $haya_post_like_re_hot_post['pid'];?>" title="赞该回复">
+											<i class="icon icon-thumbs-up" aria-label="赞该回复"></i>
+											<span class="haya-post-like-re-post-user-count"><?php echo intval($haya_post_like_re_hot_post['haya_post_likes']); ?></span>
+										</a>
+									<?php } ?>
+								</span>
+
+							</div>
+							<div class="text-end text-grey">
+								<?php if($allowpost) { ?>
+									<a href="javascript:void(0)" data-tid="<?php echo $haya_post_like_re_hot_post['tid'];?>" data-pid="<?php echo $haya_post_like_re_hot_post['pid'];?>" class="text-grey post_reply me-2"><i class="icon-reply"></i> 引用</a>
+								<?php } ?>
+
+								<?php if($allowupdate || $haya_post_like_re_hot_post['allowupdate']) { ?>
+									<a href="<?php echo url("post-update-$haya_post_like_re_hot_post[pid]");?>" class="text-grey post_update me-2"><i class="icon-edit"></i> <?php echo lang('edit');?></a>
+								<?php } ?>
+
+								<?php if($allowdelete || $haya_post_like_re_hot_post['allowdelete']) { ?>
+									<a data-href="<?php echo url("post-delete-$haya_post_like_re_hot_post[pid]");?>" data-confirm-text="<?php echo lang('confirm_delete');?>" href="javascript:void(0);" class="text-grey post_delete _confirm me-2"><i class="icon-remove"></i> <?php echo lang('delete');?></a>
+								<?php } ?>
+							</div>
+						</div>
+						<div class="message mt-1 break-all">
+
+							<?php if(!empty($haya_post_like_re_hot_post['subject'])) { ?>
+								<h6><a href="<?php echo url("thread-$haya_post_like_re_hot_post[tid]");?>" target="_blank"><?php echo $haya_post_like_re_hot_post['subject'];?></a></h6>
+							<?php } ?>
+
+							<?php echo $haya_post_like_re_hot_post['message_fmt'];?>
+
+							<?php echo post_file_list_html($haya_post_like_re_hot_post['filelist']);?>
+						</div>
+					</div>
+				</li>
+				<?php } ?>
+
+			</ul>
+		</div>
+	</div>
+
+	<?php } ?>
+
+<?php } ?>

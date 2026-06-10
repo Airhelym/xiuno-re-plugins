@@ -1,0 +1,25 @@
+<?php if (!empty($haya_post_like_re_users)) { ?>
+	<div class="break-all line-height-3 d-none d-lg-block">
+		<?php foreach($haya_post_like_re_users as & $haya_post_like_re_user){ ?>
+			<span class="me-3 mb-2 haya-post-like-re-user-<?php echo $haya_post_like_re_user['like_user']['uid']; ?>">
+				<a href="<?php echo url("user-".$haya_post_like_re_user['like_user']['uid']); ?>" target="_balnk" title="<?php echo $haya_post_like_re_user['like_user']['username']; ?>">
+					<img class="avatar-1" src="<?php echo $haya_post_like_re_user['like_user']['avatar_url']; ?>">
+				</a>
+
+				<a href="<?php echo url("user-".$haya_post_like_re_user['like_user']['uid']); ?>" target="_balnk" title="<?php echo $haya_post_like_re_user['like_user']['username']; ?>">
+					<?php echo $haya_post_like_re_user['like_user']['username']; ?>
+				</a>
+			</span>
+
+			<?php $haya_post_like_re_user_list[] = '<a href="'.url("user-".$haya_post_like_re_user['like_user']['uid']).'" target="_balnk" title="'.$haya_post_like_re_user['like_user']['username'].'"><img class="avatar-1" src="'.$haya_post_like_re_user['like_user']['avatar_url'].'"> '.$haya_post_like_re_user['like_user']['username'].'</a>'; ?>
+		<?php } ?>
+	</div>
+
+	<div class="text-muted break-all line-height-3 d-lg-none">
+		<?php echo implode('、', $haya_post_like_re_user_list); ?>
+	</div>
+<?php } else { ?>
+	<div class="text-muted">
+		还没有用户点赞本贴~
+	</div>
+<?php } ?>

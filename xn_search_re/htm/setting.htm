@@ -1,0 +1,139 @@
+<?php include _include(ADMIN_PATH.'view/htm/header.inc.htm');?>
+
+<div class="row">
+	<div class="col-lg-10 mx-auto">
+
+		<div class="btn-group mb-3" role="group">
+			<?php echo admin_tab_active(array(
+					'set'=>array('url'=>url('plugin-setting-xn_search_re-set'), 'text'=>lang('admin_setting_search_set')),
+					'cn_encode'=>array('url'=>url('plugin-setting-xn_search_re-cn_encode'), 'text'=>lang('admin_setting_search_cn_encode'))
+				), $action);
+			?>
+		</div>
+
+		<div class="card">
+			<div class="card-body">
+				<form action="<?php echo url("plugin-setting-xn_search_re");?>" method="post" id="form">
+					<div class="mb-3 row">
+						<label class="col-sm-2 col-form-label"><?php echo lang('search_type');?>：</label>
+						<div class="col-sm-10">
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="type" value="like" id="type_like"<?php echo $search_conf['type']=='like'?' checked':'';?>>
+								<label class="form-check-label" for="type_like"><?php echo lang('search_type_like');?></label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="type" value="fulltext" id="type_fulltext"<?php echo $search_conf['type']=='fulltext'?' checked':'';?>>
+								<label class="form-check-label" for="type_fulltext"><?php echo lang('search_type_fulltext');?></label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="type" value="site_url" id="type_site_url"<?php echo $search_conf['type']=='site_url'?' checked':'';?>>
+								<label class="form-check-label" for="type_site_url"><?php echo lang('search_type_site_url');?></label>
+							</div>
+						</div>
+					</div>
+					<div class="mb-3 row" id="site_url">
+						<label class="col-sm-2 col-form-label"><?php echo lang('search_type_site_url');?> URL：</label>
+						<div class="col-sm-10">
+							<?php echo $input['site_url']; ?>
+							<div class="text-muted small mt-1"><?php echo lang('search_site_url_brief');?></div>
+						</div>
+					</div>
+					<div class="mb-3 row" id="range">
+						<label class="col-sm-2 col-form-label"><?php echo lang('admin_search_range');?>：</label>
+						<div class="col-sm-10">
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="range" value="0" id="range_0"<?php echo $search_conf['range']==0?' checked':'';?>>
+								<label class="form-check-label" for="range_0"><?php echo lang('all');?></label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="range" value="1" id="range_1"<?php echo $search_conf['range']==1?' checked':'';?>>
+								<label class="form-check-label" for="range_1"><?php echo lang('subject');?></label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="range" value="2" id="range_2"<?php echo $search_conf['range']==2?' checked':'';?>>
+								<label class="form-check-label" for="range_2"><?php echo lang('search_range_post');?></label>
+							</div>
+						</div>
+					</div>
+					<div class="mb-3 row" id="fuzzy">
+						<label class="col-sm-2 col-form-label"><?php echo lang('search_fuzzy');?>：</label>
+						<div class="col-sm-10">
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="fuzzy" value="1" id="fuzzy_1"<?php echo $search_conf['fuzzy']==1?' checked':'';?>>
+								<label class="form-check-label" for="fuzzy_1"><?php echo lang('open');?></label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="fuzzy" value="0" id="fuzzy_0"<?php echo $search_conf['fuzzy']==0?' checked':'';?>>
+								<label class="form-check-label" for="fuzzy_0"><?php echo lang('close');?></label>
+							</div>
+							<div class="text-muted small mt-1"><?php echo lang('search_fuzzy_brief');?></div>
+						</div>
+					</div>
+					<div class="mb-3 row">
+						<label class="col-sm-2 col-form-label"></label>
+						<div class="col-sm-10">
+							<button type="submit" class="btn btn-primary w-100" id="submit" data-loading-text="<?php echo lang('submiting');?>..."><?php echo lang('confirm');?></button>
+							<a role="button" class="btn btn-secondary w-100 mt-3" href="javascript:history.back();">
+								<?php echo lang('back');?>
+							</a>
+						</div>
+					</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<?php include _include(ADMIN_PATH.'view/htm/footer.inc.htm');?>
+
+<script>
+var jform = $("#form");
+var jsubmit = $("#submit");
+var referer = '<?php echo http_referer();?>';
+jform.on('submit', function() {
+	jform.reset();
+	jsubmit.button('loading');
+	var postdata = jform.serialize();
+	$.xpost(jform.attr('action'), postdata, function(code, message) {
+		if (code == 0) {
+			$.alert(message);
+			jsubmit.text(message).delay(2000).button('reset').location(referer);
+			return;
+		} else {
+			$.alert(message);
+			jsubmit.button('reset');
+		}
+	});
+	return false;
+});
+
+function search_type_radio_check(v) {
+	var jfulltext = $('#fulltext');
+	var jsite_url = $('#site_url');
+	var jrange = $('#range');
+	var jfuzzy = $('#fuzzy');
+	if (v == 'fulltext') {
+		jfulltext.show();
+		jsite_url.hide();
+		jrange.show();
+		jfuzzy.hide();
+	} else if (v == 'like') {
+		jfulltext.hide();
+		jsite_url.hide();
+		jrange.show();
+		jfuzzy.show();
+	} else if (v == 'site_url') {
+		jfulltext.hide();
+		jsite_url.show();
+		jrange.hide();
+		jfuzzy.hide();
+	}
+}
+
+jform.find('input[name="type"]').on('click', function() {
+	var v = $(this).val();
+	search_type_radio_check(v);
+});
+search_type_radio_check(jform.find('input[name="type"]').checked());
+</script>

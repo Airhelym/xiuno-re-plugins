@@ -1,0 +1,15 @@
+{
+    "name": "帖子点赞 re",
+    "brief": "对喜欢的帖子点赞及对喜欢的回复点赞。<br>增加：点赞用户展示、分类通知。",
+    "version": "2.0.0",
+    "author": "deatil",
+    "id": "haya_post_like_re",
+    "bbs_version": "4.0.3",
+    "installed": 1,
+    "enable": 1,
+    "hooks_rank": {
+        "thread_plugin_body.htm": 2,
+        "thread_plugin_after.htm": 2
+    },
+    "dependencies": []
+}
