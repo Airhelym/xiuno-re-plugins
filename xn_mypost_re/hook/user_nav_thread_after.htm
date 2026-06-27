@@ -1,0 +1,5 @@
+			<?php $xn_setting = xn_mypost_re_setting_get(); if ($xn_setting['show_on_user']) { ?>
+			<li class="nav-item">
+				<a class="nav-link" href="<?php echo url("user-post-$_uid");?>" data-active="user-post"><?php echo lang('user_post');?></a>
+			</li>
+			<?php } ?>

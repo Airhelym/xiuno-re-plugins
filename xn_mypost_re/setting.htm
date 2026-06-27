@@ -1,0 +1,42 @@
+<?php include _include(ADMIN_PATH.'view/htm/header.inc.htm');?>
+<div class="row">
+<div class="col-lg-10 mx-auto">
+<form action="<?php echo url('plugin-setting-xn_mypost_re');?>" method="post" id="setting_form">
+<div class="card">
+<div class="card-body">
+<h3>我的回帖 / My Reply 设置</h3>
+
+<div class="mb-3">
+<label class="form-label">在「我的」页面显示回帖选项卡</label>
+<div class="form-text mb-2">控制 my 路由下是否展示「帖子」选项卡</div>
+<?php echo form_radio_yes_no('show_on_my', $setting['show_on_my']);?>
+</div>
+
+<div class="mb-3">
+<label class="form-label">在用户主页显示回帖选项卡</label>
+<div class="form-text mb-2">控制 user 路由下是否展示「帖子」选项卡</div>
+<?php echo form_radio_yes_no('show_on_user', $setting['show_on_user']);?>
+</div>
+
+<div class="mb-3">
+<label class="form-label">仅展示回帖（不包含主题帖）</label>
+<div class="form-text mb-2">开启后只显示回复内容，不显示用户发表的主题帖</div>
+<?php echo form_radio_yes_no('posts_only', $setting['posts_only']);?>
+</div>
+
+<button type="submit" class="btn btn-primary" id="jsubmit" data-loading-text="<?php echo lang('submiting');?>..."><?php echo lang('save');?></button>
+</div>
+</div>
+</form>
+</div>
+</div>
+<script>
+var jsubmit = $('#jsubmit');
+$('#setting_form').on('submit', function() {
+    jsubmit.prop('disabled', true);
+    setTimeout(function() {
+        jsubmit.prop('disabled', false);
+    }, 3000);
+});
+</script>
+<?php include _include(ADMIN_PATH.'view/htm/footer.inc.htm');?>

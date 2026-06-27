@@ -1,0 +1,16 @@
+<script>
+$(function(){
+    var postid = window.location.hash.split("#")[1];
+    if (postid) {
+        var domid = $('.postlist .post[data-pid="'+postid+'"]');
+        if (domid.length > 0) {
+            domid.addClass('current');
+            var offset = domid.offset().top;
+            $("html, body").animate({scrollTop: offset}, {duration: 500, easing: "swing"});
+            domid.on('click', function() {
+                $(this).removeClass('current');
+            });
+        }
+    }
+});
+</script>

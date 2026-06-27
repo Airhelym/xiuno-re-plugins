@@ -3,7 +3,7 @@
 function search_type() {
 	static $search_conf = FALSE;
 	if($search_conf === FALSE) $search_conf = kv_get('search_conf');
-	return $search_conf['type'];
+	return isset($search_conf['type']) ? $search_conf['type'] : 'like';
 }
 
 function search_fuzzy_enabled() {

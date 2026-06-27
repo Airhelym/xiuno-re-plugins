@@ -1,0 +1,11 @@
+{
+    "name": "我的回帖 Re / My Reply Re",
+    "brief": "我的回帖 Re - 回帖展示优化，支持后台开关、回帖/主题筛选、类消息通知的展示样式",
+    "version": "2.0",
+    "bbs_version": "4.0.4",
+    "installed": 0,
+    "enable": 0,
+    "hooks_rank": [],
+    "overwrites_rank": [],
+    "dependencies": []
+}

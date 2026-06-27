@@ -1,0 +1,63 @@
+<template include="./view/htm/my_thread.template.htm">
+    <slot name="my_body">
+        <link rel="stylesheet" href="../plugin/xn_mypost_re/view/css/xn_mypost_re.css">
+        <?php empty($allowupdate) AND $allowupdate = 0; empty($allowdelete) AND $allowdelete = 0; ?>
+        <ul class="list-unstyled mypost-body mb-0">
+            <?php if ($postlist) { foreach ($postlist as $_post) { ?>
+            <li class="post-item d-flex py-2 border-bottom" data-pid="<?php echo $_post['pid'];?>">
+                <a href="<?php echo url("user-$_post[uid]");?>" class="ms-1 mt-1 me-3 flex-shrink-0" tabindex="-1">
+                    <img class="avatar-3" src="<?php echo $_post['user_avatar_url'];?>">
+                </a>
+                <div class="flex-grow-1 min-w-0">
+                    <div class="d-flex justify-content-between small text-muted">
+                        <div class="text-truncate">
+                            <span class="username fw-bold me-1"><a class="text-muted" href="<?php echo url("user-$_post[uid]");?>"><?php echo $_post['username'];?></a></span>
+                            <span class="date"><?php echo $_post['create_date_fmt'];?></span>
+                        </div>
+                        <div class="mt-1 text-end">
+                            <?php if($allowupdate || $_post['allowupdate']) { ?>
+                            <a href="<?php echo url("post-update-$_post[pid]");?>" class="text-grey post_update me-2 small"><i class="icon-edit"></i> <?php echo lang('edit');?></a>
+                            <?php } ?>
+                            <?php if($allowdelete || $_post['allowdelete']) { ?>
+                            <a data-href="<?php echo url("post-delete-$_post[pid]");?>" data-confirm-text="<?php echo lang('confirm_delete');?>" href="javascript:void(0);" class="text-grey post_delete _confirm me-2 small"><i class="icon-remove"></i> <?php echo lang('delete');?></a>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <div class="subject text-truncate mt-1">
+                        <a href="<?php echo url("thread-$_post[tid]");?>"><?php echo $_post['subject'];?></a>
+                    </div>
+                    <div class="post-message mt-1">
+                        <a href="<?php echo url("thread-$_post[tid]");?>#<?php echo $_post['pid'];?>"><?php echo $_post['message_short'];?></a>
+                    </div>
+                </div>
+            </li>
+            <?php } } else { ?>
+            <li class="py-3 text-center text-muted"><?php echo lang('none');?></li>
+            <?php } ?>
+        </ul>
+
+        <?php if ($pagination) { ?>
+        <nav><ul class="pagination justify-content-center"><?php echo $pagination; ?></ul></nav>
+        <?php } ?>
+    </slot>
+</template>
+
+<script>
+$('a[data-active="my-post"]').addClass('active');
+
+// hash-based shake on thread page
+$(function(){
+    var postid = window.location.hash.split("#")[1];
+    if (postid) {
+        var domid = $('.mypost-body .post-item[data-pid="'+postid+'"]');
+        if (domid.length > 0) {
+            domid.addClass('current');
+            var offset = domid.offset().top - 80;
+            $("html, body").animate({scrollTop: offset}, {duration: 500, easing: "swing"});
+            domid.on('click', function() {
+                $(this).removeClass('current');
+            });
+        }
+    }
+});
+</script>

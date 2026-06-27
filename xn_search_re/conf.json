@@ -3,10 +3,12 @@
     "brief": "基于 xn_search 进行优化，在原插件的基础上增加用户搜索、模糊搜索功能，支持 MySQL FULLTEXT / LIKE 搜索。",
     "version": "1.0",
     "bbs_version": "4.0",
-    "installed": 0,
-    "enable": 0,
+    "installed": 1,
+    "enable": 1,
     "hooks_rank": {
-        "index_site_brief_after.htm": 10
+        "index_site_brief_after.htm": 10,
+        "forum_mod_before.htm": 10,
+        "thread_user_after.htm": 10
     },
     "overwrites_rank": [],
     "dependencies": []
